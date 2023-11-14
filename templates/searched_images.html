@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- your head content here -->
+    <title>Images</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/templatemo-style.css') }}">
+    <script src="{{ url_for('static', filename='js/usernamesetting.js') }}"></script>
+
+
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-film mr-2"></i>
+                E-Learning Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-2" href="images.html">Photos</a>
+                </li>
+              
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="profile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="courses.html"> My Courses</a>
+                </li>
+    
+                <li class="nav-item">
+                    <a class="nav-link nav-link-4" href="logout.html">Logout</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" style="background-image: url('{{ url_for('static', filename='img/hero.jpg') }}');   background-repeat: no-repeat;  background-position: center; width:100%">
+
+
+        <!-- Rest of your content -->
+        <form class="d-flex tm-search-form" method="POST" action="/search_result">
+            <input class="form-control tm-search-input" type="search" placeholder="Search" aria-label="Search" name="serach">
+            <button class="btn btn-outline-success tm-search-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    </div>
+    
+        
+    
+    
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-6 tm-text-primary">
+                Feed      
+            </h2>
+            <div class="col-6 d-flex justify-content-end align-items-center">
+                
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                {% for images in searched_data %}
+                    <div class="col-md-4 col-12">
+                        <div class="card">
+                            <img src="{{ url_for('static', filename='/img/' + images[1].replace('static/img\\', '')) }}" alt="image{{ loop.index }}" class="img-fluid">
+                            <p>{{ images[2] }}</p>
+                            <p>{{ images[3] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+   
+    
+</body>
+</html>

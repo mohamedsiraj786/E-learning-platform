@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/notes.css') }}">
+</head>
+
+<body>
+    <form method="POST" action="/usernotes">
+        <div class="div-box" id="div-box">
+            <h3>ADD YOUR NOTES</h3>
+            <input type="text" placeholder="Enter Notes Name" name="title">
+        </div>
+    
+        <div class="div-box-2" id="div-box" > 
+            <textarea name="notes" style=" vertical-align: top; line-height: 1.5;"> </textarea>
+
+   
+            <div style="display:flex; justify-content:center;">
+                <input type="submit" class="button-2" value="SAVE YOUR CONTENT">
+               
+            </div>
+            <a href ="getnotes.html" style="display:flex; justify-content:center; margin-top:20px;">Retrive Your Notes Data ...?</a>
+        </div>
+    </form>
+</body>
+</html>

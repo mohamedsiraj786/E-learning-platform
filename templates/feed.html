@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- your head content here -->
+    <title>Image Upload</title>
+</head>
+<body>
+    <h1>Image Upload</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        <div>
+            {{ form.image.label }}
+            {{ form.image }}
+            {% if form.image.errors %}
+                <p>{{ form.image.errors[0] }}</p>
+            {% endif %}
+        </div>
+        <div>
+            {{ form.description.label }}
+            {{ form.description }}
+            {% if form.description.errors %}
+                <p>{{ form.description.errors[0] }}</p>
+            {% endif %}
+        </div>
+        <div>
+            {{ form.program_name.label }}
+            {{ form.program_name }} <!-- This line was missing in your original code -->
+            {% if form.program_name.errors %}
+                <p>{{ form.program_name.errors[0] }}</p>
+            {% endif %}
+        </div>
+        <div>
+            <button type="submit">Upload Image</button>
+        </div>
+    </form>
+</body>
+</html>

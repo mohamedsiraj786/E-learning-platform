@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/getnotes.css') }}">
+</head>
+<body>
+    <form method="POST" action="/usergetnotes">
+        <div class="div-box" id="div-box">
+            <h3></h3>
+            <input type="text" placeholder="Enter Notes Name" name="title">
+            <input type="submit"  name="title" value ="Get Notes">
+            
+        </div>
+    
+        <div class="div-box-2" id="div-box" > 
+           
+            {{ data }}
+   
+            <div style="display:flex; justify-content:center;">
+              
+               
+            </div>
+           
+        </div>
+    </form>
+</body>
+</html>

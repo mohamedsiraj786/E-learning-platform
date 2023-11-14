@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/course_id.js') }}"></script>
+</head>
+<style>
+    .modal {
+        display: none;
+        /* Hide the modal initially */
+        /* ... (other CSS styles) */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: black;
+    }
+</style>
+
+<body>
+    <h1>Course List</h1>
+
+    <!-- Modal Content -->
+
+    </div>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+        {% for index, (course_url, course_detail) in enumerated_data %}
+            <div style="width: 22%; margin: 10px; border: 1px solid #ddd; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 10px;">
+                <video controls autoplay style="width: 100%;">
+                    <source src="{{ url_for('static', filename='video/' + course_url) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                <p style="font-weight: bold; text-transform: uppercase;"> Course: {{ course_detail[1] }}</p>
+               
+                <div style="display: flex; justify-content: space-between">
+                    <a href="{{ url_for('play_video', course_id=course_detail[2]) }}" class="btn btn-primary take-notes-btn" style="font-size: 10px;">View Course</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>

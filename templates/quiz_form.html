@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <h1>Form</h1>
+    <form method="post" action="/created_quiz">
+        <label for="question">Question:</label>
+        <input type="text" name="question" required><br>
+
+        <label for="option1">Option 1:</label>
+        <input type="text" name="option1" required><br>
+
+        <label for="option2">Option 2:</label>
+        <input type="text" name="option2" required><br>
+
+        <label for="option3">Option 3:</label>
+        <input type="text" name="option3" required><br>
+
+        <label for="option4">Option 4:</label>
+        <input type="text" name="option4" required><br>
+
+        <label for="answer">Answer:</label>
+        <input type="text" name="answer" required><br>
+
+        <label for="course_id">Course ID:</label>
+        <select name="course_id">
+            {% for course_id in course_id_data %}
+                <option value="{{ course_id }} "> {{ course_id }}  </option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
