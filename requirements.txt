@@ -8,6 +8,7 @@ blinker==1.6.3
 certifi==2023.7.22
 charset-normalizer==3.3.2
 click==8.1.7
+cloudinary==1.36.0
 colorama==0.4.6
 comm==0.1.2
 debugpy==1.6.6
