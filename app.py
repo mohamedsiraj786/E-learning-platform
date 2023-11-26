@@ -10,6 +10,10 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 from werkzeug.utils import secure_filename
 from wtforms import StringField
 from wtforms.validators import InputRequired
+import cloudinary
+from cloudinary.uploader import upload as cloudinary_upload
+from cloudinary.api import resources as cloudinary_resources
+
 
 
 conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
@@ -24,6 +28,12 @@ print(secret_key)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__, template_folder=os.path.join(BASE_DIR, "templates"))
 app.secret_key = '72f6728c9fb135a30f6ff3ca4436333f79b1d2c8e0f15d570e4004770390650f'
+# Configure Cloudinary with your credentials
+cloudinary.config(
+    cloud_name="desfmkg2f",
+    api_key="358228458767548",
+    api_secret="4P1KuIc7kUjTvCMh1_uvuyB88gg"
+)
 
 course_data = []
 select_course_data = []
@@ -76,7 +86,7 @@ def getnotes():
         titlename = request.form.get('title')
         conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
         cursor = conn.cursor()
-        query = "SELECT username,usernotes from usernotes WHERE notestitle = %s AND username = %s"
+        query = "SELECT usernotes from usernotes WHERE notestitle = %s AND username = %s"
         cursor.execute(query,(titlename,username))
         result = cursor.fetchone()
         print(result,"usernotesandname")
@@ -404,47 +414,51 @@ class ImageUploadForm(FlaskForm):
 
 @app.route('/feed.html', methods=['GET', 'POST'])
 def feed():
-    form = ImageUploadForm()
-    if form.validate_on_submit():
-        image_file = form.image.data
-        description = form.description.data
-        program_name = form.program_name.data
+    return render_template('feed.html')
 
-        if image_file:
-            filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            image_file.save(image_path)
 
-            # Insert data into the Images table
-            query = 'INSERT INTO Images (image_url, image_description,program_name) VALUES (%s, %s, %s)'
-            data = (image_path, description,program_name)
-            cursor.execute(query, data)
-            conn.commit()
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-            return f'Image uploaded with description "{description}" and can be accessed at: <img src="{image_path}" alt="uploaded image">'
-
-    # If the form is not validated or it's a GET request, render the template
-    return render_template('feed.html', form=form)
+def allowed_file_img(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/upload_image', methods=['POST'])
+
 def upload_image():
-    form = ImageUploadForm()
-    if form.validate_on_submit():
-        image_file = form.image.data
-        if image_file:
-            filename = secure_filename(image_file.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if request.method == 'POST':
+        description = request.form.get('description')
+        program_name = request.form.get('program_name')
+        file_to_upload = request.files['file']
+        
+        
 
-            # Your database logic goes here
+        if file_to_upload and allowed_file_img(file_to_upload.filename):
+            folder = 'user_record'  # Replace with your desired folder name
+            result = cloudinary_upload(file_to_upload, folder=folder)
+            image_url = result['secure_url']  # Get Cloudinary URL
+
+            # Check if the image URL already exists in the database
+            conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
+            cursor = conn.cursor()
+            query = "SELECT image_url FROM images WHERE image_url = %s"
+            cursor.execute(query, (image_url,))
+            existing_url = cursor.fetchone()
+
+            if not existing_url:  # If URL doesn't exist, insert the record
+                query = "INSERT INTO images(image_url, image_description, program_name) VALUES (%s, %s, %s)"
+                cursor.execute(query, (image_url, description, program_name))
+                conn.commit()
+
+            conn.close()
             
+            return f"Image uploaded! URL: {image_url}"
 
-            image_file.save(image_path)
+        return "Invalid file format or upload failed"
 
-            # Generate a unique URL for the uploaded image
-            image_url = '/static/img/' + filename
 
-            return f'Image uploaded and can be accessed at: <img src="{image_url}" alt="uploaded image">'
-    return 'Invalid image format. Allowed formats are: jpg, jpeg, png'
+
+
+
 
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
@@ -484,11 +498,17 @@ def upload_video():
     return "Invalid file format. Allowed formats are: mp4"
 
 @app.route('/images.html')
-def images():
-    query = "SELECT * FROM Images"
+def image_gallery():
+    # Fetch distinct image details from the database
+    conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
+    cursor = conn.cursor()
+    query = "SELECT DISTINCT image_url, image_description, program_name FROM images"
     cursor.execute(query)
-    details = cursor.fetchall()
-    return render_template('images.html', details=details)
+    image_details = cursor.fetchall()
+    conn.close()
+
+    return render_template('images.html', image_details=image_details)      
+
 
 
     
