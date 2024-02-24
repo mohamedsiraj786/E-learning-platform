@@ -130,7 +130,7 @@ def usernotes():
     return f"{username}"    
       
 
-@app.route('/')
+@app.route('/https://sore-plum-hen-yoke.cyclic.app/')
 def index():
   
     
