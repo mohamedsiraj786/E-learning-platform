@@ -43,7 +43,7 @@ set(course_data)
 video_url = ''
 
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/search', methods=['GET', 'POST'])
 def search():
     if request.method == "POST":
         user_keyword = request.form.get('serach')
@@ -65,21 +65,21 @@ def search():
 # Rest of your Flask app code...
 
        
-@app.route('/secondpage.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/secondpage.html')
 def secondpage():
        return render_template('secondpage.html')
        
        
 
-@app.route('/notes.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/notes.html')
 def notes():
       return render_template('notes.html')    
      
-@app.route('/play_video/getnotes.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/play_video/getnotes.html')
 def getnote():
       return render_template ('getnotes.html')
   
-@app.route('/usergetnotes',methods=["POST"])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/usergetnotes',methods=["POST"])
 def getnotes():
     if 'username' in session:
         username = session.get('username')
@@ -102,7 +102,7 @@ def getnotes():
         
         
         
-@app.route('/search_result',methods=['POST'])     
+@app.route('https://sore-plum-hen-yoke.cyclic.app/search_result',methods=['POST'])     
 def searched_images():
     if request.method == "POST":
       searched_data =  request.form.get('serach')
@@ -115,7 +115,7 @@ def searched_images():
       return render_template('searched_images.html',searched_data = result)
         
   
-@app.route('/usernotes', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/usernotes', methods=['POST'])
 def usernotes():
     title = request.form.get('title')
     notes = request.form.get('notes')
@@ -154,7 +154,7 @@ def index():
     else:
      return render_template('register.html')
  
-@app.route('/index.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/index.html')
 def home():
   
     
@@ -179,7 +179,7 @@ def home():
      return render_template('register.html')
  
  
-@app.route('/quiz_form.html') 
+@app.route('https://sore-plum-hen-yoke.cyclic.app/quiz_form.html') 
 def quiz():
     conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
     cursor = conn.cursor()
@@ -192,7 +192,7 @@ def quiz():
     
     return render_template('quiz_form.html',course_id_data = id_array)
 
-@app.route('/created_quiz', methods=['GET', 'POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/created_quiz', methods=['GET', 'POST'])
 def quiz_created():
     if request.method == 'POST':
         # Get form data
@@ -226,31 +226,31 @@ def quiz_created():
     # Render the form template
     return render_template('profile.html')
 
-@app.route('/login')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/login')
 def login():
     
    if  'username' in session:
        return redirect(url_for('index'))
    return  render_template('login.html')
 
-@app.route('/logout.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/logout.html')
 def logout():
     session.pop('username')
     return render_template('login.html')
     
 
-@app.route('/test.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/test.html')
 def test():
     return render_template('test.html')
 
-@app.route('/courses.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/courses.html')
 def courses():
 
     enumerated_data = list(enumerate(zip(course_data, select_course_data)))
     print(enumerated_data,"enumuration")
     return render_template('courses.html', enumerated_data=enumerated_data)
 
-@app.route('/process_form/<int:id>', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/process_form/<int:id>', methods=['POST'])
 def process_form(id):
     if request.method == "POST":
         # Handle the POST request here
@@ -266,7 +266,7 @@ def process_form(id):
     # You can also access other form data using request.form
     # For example, if you have form fields like <input type="text" name="field_name">,
     # you can access them using request.form['field_name']
-@app.route('/submit_quiz', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/submit_quiz', methods=['POST'])
 def submit_quiz():
     user_responses = request.json  # Assuming the frontend sends a JSON payload with user responses
     # Perform actions with user_responses (e.g., save to database)
@@ -302,7 +302,7 @@ def submit_quiz():
 
 
 
-@app.route('/videoid/<videoId>/mcq.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/videoid/<videoId>/mcq.html')
 def question(videoId):
     conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
     cursor = conn.cursor()
@@ -315,7 +315,7 @@ def question(videoId):
     return render_template('mcq.html', quiz_data=result)
 
     
-@app.route('/save_notes', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/save_notes', methods=['POST'])
 def save_notes():
     notes_content = request.form.get('notesContent')
     video_id = request.form.get('videoId')  
@@ -331,7 +331,7 @@ def save_notes():
     
     return f"{notes_content} and {video_id}"
     
-@app.route('/play_video/<course_id>')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/play_video/<course_id>')
 def play_video(course_id):
     query = "SELECT * from courses WHERE id = %s"
     data = (course_id,)
@@ -358,7 +358,7 @@ def play_video(course_id):
         return render_template('courses.html')
 
 
-@app.route('/api/update_courses', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/api/update_courses', methods=['POST'])
 def update_courses():
     
     data = request.get_json()
@@ -386,12 +386,12 @@ def update_courses():
     
 
     
-@app.route('/profile.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/profile.html')
 def profile():
     username = session.get('username')
     return render_template('profile.html',username=username)
 
-@app.route('/admin.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/admin.html')
 def admin():
     return render_template('admin.html')
 
@@ -422,7 +422,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file_img(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload_image', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/upload_image', methods=['POST'])
 
 def upload_image():
     if request.method == 'POST':
@@ -463,7 +463,7 @@ def upload_image():
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
-@app.route('/upload_video', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/upload_video', methods=['POST'])
 def upload_video():
     print(request.files,"sample data")
     if 'video_file' not in request.files:
@@ -497,7 +497,7 @@ def upload_video():
 
     return "Invalid file format. Allowed formats are: mp4"
 
-@app.route('/images.html')
+@app.route('https://sore-plum-hen-yoke.cyclic.app/images.html')
 def image_gallery():
     # Fetch distinct image details from the database
     conn = mysql.connector.connect(host="localhost", user="root", password="", database="jamil")
@@ -514,7 +514,7 @@ def image_gallery():
     
 
 
-@app.route('/Home', methods=['POST'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/Home', methods=['POST'])
 def login_check():
     
     if request.method == "POST":
@@ -555,7 +555,7 @@ def login_check():
     else:
         return redirect(url_for('index.html'))
 
-@app.route('/confirm', methods=['POST', 'GET'])
+@app.route('https://sore-plum-hen-yoke.cyclic.app/confirm', methods=['POST', 'GET'])
 def confirm():
     if request.method == "POST":
         ue = request.form.get('useremail')
