@@ -130,7 +130,7 @@ def usernotes():
     return f"{username}"    
       
 
-@app.route('/')
+@app.route('https://sleepy-sheath-dress-colt.cyclic.app/')
 def index():
   
     
