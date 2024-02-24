@@ -150,9 +150,9 @@ def index():
          print(filenames,"example")
          print(video_url,"example1")
          print(details,"example3")
-         return render_template('index.html', details = details, video_name = filenames)
+         return render_template('https://sore-plum-hen-yoke.cyclic.app/index.html', details = details, video_name = filenames)
     else:
-     return render_template('register.html')
+     return render_template('https://sore-plum-hen-yoke.cyclic.app/register.html')
  
 @app.route('https://sore-plum-hen-yoke.cyclic.app/index.html')
 def home():
